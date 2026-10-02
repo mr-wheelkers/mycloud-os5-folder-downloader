@@ -4,7 +4,11 @@
   "version": "1.0.0",
   "description": "Download whole folders (with subfolders) from the My Cloud OS 5 web app, keeping the folder structure. Unofficial, not affiliated with Western Digital.",
   "homepage_url": "https://github.com/mr-wheelkers/mycloud-os5-folder-downloader",
-  "icons": { "48": "icons/icon-48.png", "96": "icons/icon-96.png", "128": "icons/icon-128.png" },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
   "permissions": [
     "webRequest",
     "downloads",
@@ -13,17 +17,32 @@
     "https://os5.mycloud.com/*",
     "https://*.wdckeystone.com/*"
   ],
-  "background": { "scripts": ["background.js"], "persistent": true },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
   "browser_action": {
     "default_title": "Folder Downloader for My Cloud OS 5",
     "default_popup": "popup.html",
-    "default_icon": { "16": "icons/icon-16.png", "32": "icons/icon-32.png" }
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
   },
   "browser_specific_settings": {
     "gecko": {
       "id": "mycloud-os5-folder-downloader@mr-wheelkers.github.io",
       "strict_min_version": "140.0",
-      "data_collection_permissions": { "required": ["none"] }
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
     }
   }
 }
