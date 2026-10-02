@@ -26,8 +26,19 @@ Files land in `Downloads/MyCloud/<folder>/…`. Keep the WD tab open while the d
 | Parallel downloads | 1–8 (default 3); your NAS's upload speed is the real limit |
 | Pause / Stop | Stop cancels in-flight files |
 | Resume | Finished files are remembered per folder; start again and they're skipped |
-| Retries | Each file 3×, then listed as failed |
+| Retries | Each file 3×, then listed as failed; **Retry failed** re-runs them with safe names |
+| Invalid names | Names illegal on your OS are fixed automatically (see below) |
 | Token refresh | WD tokens last 15 min; the extension reloads the WD tab to get a new one |
+
+## Invalid file names
+
+NAS file names can contain characters that Windows, macOS or Firefox won't accept, such as `: * ? " < > |`, control or invisible characters, `CON`/`NUL`, trailing dots, or names that are too long. The extension handles them in three steps:
+
+1. **Normal clean-up.** Illegal characters become `_`, invisible/bidi characters are removed, reserved names get a `_` prefix, and long names are shortened to 200 bytes with the extension kept.
+2. **Safe-name fallback.** If Firefox or the filesystem still rejects a file (for example, a path too long for Windows), it is retried with an ASCII-only, shortened name plus a unique suffix: `résumé:v2.pdf` → `resume_v2~f3k9a1.pdf`.
+3. **Collisions.** Two remote names that clean up to the same local name, like `a?.jpg` and `a_.jpg`, never overwrite each other. The second one gets a `~id` suffix.
+
+Every renamed file is listed in `_renamed-files.txt` in the downloaded folder, mapping the original path to the saved path.
 
 ## How it works
 

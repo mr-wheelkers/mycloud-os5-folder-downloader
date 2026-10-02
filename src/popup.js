@@ -23,14 +23,21 @@ async function refresh() {
   const pct = j.totalBytes ? (100 * j.doneBytes / j.totalBytes) : 0;
   $("bar").style.width = pct.toFixed(1) + "%";
   $("nums").textContent = `${j.rootName || ""}  ·  ${j.done}/${j.total} files  ·  ${fmt(j.doneBytes)} / ${fmt(j.totalBytes)}` +
-    (j.scanning ? " (still scanning)" : "") + (j.skipped ? `  ·  ${j.skipped} skipped (done earlier)` : "");
+    (j.scanning ? " (still scanning)" : "") + (j.skipped ? `  ·  ${j.skipped} skipped (done earlier)` : "") +
+    (j.renamed ? `  ·  ${j.renamed} renamed (see _renamed-files.txt)` : "");
   $("err").textContent = j.error || "";
   $("activeWrap").hidden = !j.activeNames.length; $("active").textContent = j.activeNames.join("\n");
+  $("retry").hidden = !j.failed.length || j.running;
   $("failWrap").hidden = !j.failed.length; $("failed").textContent = j.failed.join("\n");
 }
 
 $("start").onclick = async () => {
   const r = await send({ cmd: "start", folderId, concurrency: Math.max(1, Math.min(8, +$("conc").value || 3)) });
+  if (!r.ok) $("err").textContent = r.err;
+  refresh();
+};
+$("retry").onclick = async () => {
+  const r = await send({ cmd: "retryFailed" });
   if (!r.ok) $("err").textContent = r.err;
   refresh();
 };
