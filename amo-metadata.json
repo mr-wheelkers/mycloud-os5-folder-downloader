@@ -1,0 +1,11 @@
+{
+  "categories": { "firefox": ["download-management"] },
+  "summary": { "en-US": "Download whole folders (with subfolders) from the My Cloud OS 5 web app, keeping the folder structure. Unofficial." },
+  "description": { "en-US": "The My Cloud OS 5 web app (os5.mycloud.com) only lets you download individual files when you are away from home. This add-on walks a folder tree through the same API the web app uses and hands every file to Firefox's download manager, recreating the folder structure under Downloads/MyCloud/.\n\n• Uses your existing web-app login; never asks for or stores your password\n• Parallel downloads, pause/stop, automatic retry\n• Remembers finished files, so a restarted job skips them\n• No analytics, no data sent anywhere except WD's own servers\n\nNot affiliated with or endorsed by Western Digital. My Cloud is a trademark of Western Digital." },
+  "homepage": { "en-US": "https://github.com/mr-wheelkers/mycloud-os5-folder-downloader" },
+  "support_url": { "en-US": "https://github.com/mr-wheelkers/mycloud-os5-folder-downloader/issues" },
+  "version": {
+    "license": "MIT",
+    "approval_notes": "Testing requires a Western Digital My Cloud OS 5 NAS and account, so a reviewer account cannot be provided. How it works: background.js observes request headers on *.wdckeystone.com (WD's relay API used by os5.mycloud.com) to reuse the web app's short-lived Bearer token and device base URL. It then lists folders via GET /sdk/v2/filesSearch/parents and downloads files via GET /sdk/v2/files/{id}/content?download=true (the same URL the web app's own Download button uses) through browser.downloads. 'tabs' is used to read the active os5.mycloud.com URL for the folder ID and to reload that tab to refresh an expired token. storage.local holds the IDs of completed files for resuming. No remote code, no minification, no third-party requests, no data collection. Source: https://github.com/mr-wheelkers/mycloud-os5-folder-downloader"
+  }
+}

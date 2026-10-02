@@ -1,0 +1,31 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+ body{font:13px system-ui,sans-serif;width:360px;margin:12px;color:#222}
+ h1{font-size:14px;margin:0 0 8px}
+ .row{margin:6px 0} .muted{color:#777;font-size:12px}
+ button{padding:5px 10px;margin-right:4px}
+ input[type=number]{width:50px}
+ .bar{height:8px;background:#eee;border-radius:4px;overflow:hidden;margin:6px 0}
+ .bar>div{height:100%;background:#2a7de1;width:0}
+ #status{font-weight:600} #err{color:#b00}
+ pre{max-height:110px;overflow:auto;background:#f6f6f6;padding:4px;font-size:11px;white-space:pre-wrap;margin:4px 0}
+ code{background:#f0f0f0;padding:0 3px}
+</style></head><body>
+<h1>Folder Downloader for My Cloud OS 5</h1>
+<div class="row muted" id="ctx"></div>
+<div class="row">Parallel downloads <input type="number" id="conc" min="1" max="8" value="3"></div>
+<div class="row">
+ <button id="start">Download this folder</button>
+ <button id="pause">Pause</button>
+ <button id="stop">Stop</button>
+</div>
+<div class="row" id="status"></div>
+<div class="bar"><div id="bar"></div></div>
+<div class="row muted" id="nums"></div>
+<div class="row" id="err"></div>
+<div id="activeWrap" class="row muted" hidden>Active:<pre id="active"></pre></div>
+<div id="failWrap" class="row" hidden>Failed:<pre id="failed"></pre></div>
+<div class="row muted"><a href="#" id="reset">Forget progress for this folder</a></div>
+<script src="popup.js"></script>
+</body></html>

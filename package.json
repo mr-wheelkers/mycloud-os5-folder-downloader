@@ -1,0 +1,13 @@
+{
+  "name": "mycloud-os5-folder-downloader",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Firefox extension: download whole folders from the My Cloud OS 5 web app.",
+  "license": "MIT",
+  "scripts": {
+    "lint": "web-ext lint --source-dir src",
+    "build": "web-ext build --source-dir src --overwrite-dest",
+    "start": "web-ext run --source-dir src --start-url https://os5.mycloud.com"
+  },
+  "devDependencies": { "web-ext": "^8.0.0" }
+}

@@ -1,0 +1,41 @@
+name: Release & submit to AMO
+# Push a tag like v1.0.0 (must match "version" in src/manifest.json).
+# Requires repo secrets AMO_JWT_ISSUER and AMO_JWT_SECRET
+# (create at https://addons.mozilla.org/developers/addon/api/key/).
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+
+      - name: Check tag matches manifest version
+        run: |
+          V=$(jq -r .version src/manifest.json)
+          [ "v$V" = "$GITHUB_REF_NAME" ] || { echo "Tag $GITHUB_REF_NAME != manifest v$V"; exit 1; }
+
+      - name: Lint
+        run: npx --yes web-ext@8 lint --source-dir src --warnings-as-errors
+
+      - name: Build zip
+        run: npx --yes web-ext@8 build --source-dir src --artifacts-dir dist --filename "{name}-{version}.zip"
+
+      - name: Submit to addons.mozilla.org (listed, goes to review)
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          npx --yes web-ext@8 sign --source-dir src --channel listed \
+            --amo-metadata amo-metadata.json --approval-timeout 0
+
+      - name: GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.zip
+          generate_release_notes: true
