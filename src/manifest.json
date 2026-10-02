@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Folder Downloader for My Cloud OS 5",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Download whole folders (with subfolders) from the My Cloud OS 5 web app, keeping the folder structure. Unofficial, not affiliated with Western Digital.",
   "homepage_url": "https://github.com/mr-wheelkers/mycloud-os5-folder-downloader",
   "icons": {
